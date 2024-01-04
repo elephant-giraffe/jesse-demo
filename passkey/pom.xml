@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.example</groupId>
+	<artifactId>passkey</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>2.6.7</spring.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jooq</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.25</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>compile</scope>
+		</dependency>
+		<!--passkey-->
+		<dependency>
+			<groupId>com.yubico</groupId>
+			<artifactId>webauthn-server-core</artifactId>
+			<version>2.5.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.yubico</groupId>
+			<artifactId>webauthn-server-attestation</artifactId>
+			<version>2.5.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>8.0.25</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<jdbc>
+						<driver>com.mysql.jdbc.Driver</driver>
+						<url>jdbc:mysql://localhost:3306/jesse</url>
+						<username>root</username>
+						<password>password</password>
+					</jdbc>
+
+					<generator>
+						<database>
+							<name>org.jooq.meta.mysql.MySQLDatabase</name>
+							<!--include和exclude用于控制为数据库中哪些表生成代码-->
+							<includes>passkey_demo</includes>
+							<!--<excludes></excludes>-->
+
+							<!--数据库名称-->
+							<inputSchema>jesse</inputSchema>
+						</database>
+
+						<generate>
+							<!--生成dao和pojo-->
+							<daos>true</daos>
+							<pojos>true</pojos>
+							<!--把数据库时间类型映射到java 8时间类型-->
+							<javaTimeTypes>true</javaTimeTypes>
+							<!--<interfaces>true</interfaces>-->
+							<!--不在生成的代码中添加spring注释，比如@Repository-->
+							<springAnnotations>false</springAnnotations>
+						</generate>
+
+						<target>
+							<!--生成代码文件的包名及放置目录-->
+							<packageName>org.jesse.passkey.dbaccess</packageName>
+							<directory>src/main/java</directory>
+						</target>
+
+					</generator>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

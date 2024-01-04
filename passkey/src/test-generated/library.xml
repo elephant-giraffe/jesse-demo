@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.9.2.xsd">
+	<!-- Configure the database connection here -->
+	<jdbc>
+		<driver>com.mysql.cj.jdbc.Driver</driver>
+		<!-- 数据库url -->
+		<url><![CDATA[jdbc:mysql://aurora01.cmex.corp:3306/phemex_user?useUnicode=true&characterEncoding=utf-8]]></url>
+		<!-- 数据库账号 -->
+		<user>admin</user>
+		<!-- 数据库账号密码 -->
+		<password>Cmex.0814</password>
+	</jdbc>
+
+	<generator>
+		<!-- The default code generator. You can override this one, to generate your own code style.
+				 Supported generators:
+				 - org.jooq.util.JavaGenerator
+				 - org.jooq.util.ScalaGenerator
+				 Defaults to org.jooq.util.JavaGenerator -->
+		<name>org.jooq.util.JavaGenerator</name>
+
+		<database>
+			<!-- The database type. The format here is:
+					 org.util.[database].[database]Database -->
+			<name>org.jooq.util.mysql.MySQLDatabase</name>
+
+			<!-- The database schema (or in the absence of schema support, in your RDBMS this
+					 can be the owner, user, database name) to be generated -->
+			<inputSchema>phemex_user</inputSchema>
+
+			<!-- All elements that are generated from your schema
+					 (A Java regular expression. Use the pipe to separate several expressions)
+					 Watch out for case-sensitivity. Depending on your database, this might be important! -->
+			<includes>t_clients</includes>
+
+			<!-- All elements that are excluded from your schema
+					 (A Java regular expression. Use the pipe to separate several expressions).
+					 Excludes match before includes, i.e. excludes have a higher priority -->
+			<excludes></excludes>
+		</database>
+
+		<target>
+			<!-- The destination package of your generated classes (within the destination directory) -->
+			<!-- 生成的包名，生成的类在此包下 -->
+			<packageName>org.jesse.passkey.dbaccess</packageName>
+
+			<!-- The destination directory of your generated classes. Using Maven directory layout here -->
+			<!-- 输出的目录 -->
+			<directory>
+				/Users/jesse.xu/Documents/Workspace/unit-boot/jooq/src/main/java
+			</directory>
+		</target>
+	</generator>
+</configuration>
